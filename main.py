@@ -31,7 +31,7 @@ def process_comment(comment, reddit):
                 sterm = line[10:]
                 print(sterm, "song requested {sterm}")
                 result = requests.get(
-                                        "https://youtuber.onrender.com", 
+                                        "https://youtuber.onrender.com/alexa", 
                                         params={"sterm": sterm}
                                       ).json()
                 if result:
