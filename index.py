@@ -4,10 +4,10 @@ import praw
 dotenv.load_dotenv()
 import os
 import requests
-import redis
+# import redis
 import random
 
-client = redis.Redis()
+# client = redis.Redis()
 thanks = [
             "danke gosaimasu!",
             "dhanyavaad ji",
@@ -19,10 +19,10 @@ def process_comment(comment, reddit):
     body = comment.body
     author = comment.author.name
     id = comment.id
-    if client.exists(id):
-        # we had replied to it so
-        print("already replied to comment", id)
-        return
+    # if client.exists(id):
+    #     # we had replied to it so
+    #     print("already replied to comment", id)
+    #     return
     if comment.submission.author.name == "USI-BOT" or True:
         # we will listen to it
         lines = body.lower().split("\n")
