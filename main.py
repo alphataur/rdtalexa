@@ -4,7 +4,6 @@ import praw
 dotenv.load_dotenv()
 import os
 import requests
-# import redis
 import random
 
 # client = redis.Redis()
