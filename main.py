@@ -38,20 +38,14 @@ def process_comment(comment, reddit):
                     url = result["data"]["url"]
                     views = result["data"]["views"]
                     imglink = result["data"]["snippet"]["thumbnails"]["url"]
-                    if author == "peekybastards" or author == "kaptainkhichdi":
-                        pass
-                    else:
-                        comment.upvote()
+                    comment.upvote()
                     comment.reply(f"##### NOW PLAYING: \n\n [{title}]({url})")
                     #client.set(id, 1)
                 else:
                     print("invalid block", line)
             if line.startswith("good bot"):
                 comment.reply(random.choice(thanks))
-                if author == "peekybastards" or author == "kaptainkhichdi":
-                    pass
-                else:
-                    comment.upvote()
+                comment.upvote()
 
 
 
