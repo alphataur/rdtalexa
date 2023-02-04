@@ -43,7 +43,7 @@ def process_comment(comment, reddit):
                     else:
                         comment.upvote()
                     comment.reply(f"##### NOW PLAYING: \n\n [{title}]({url})")
-                    client.set(id, 1)
+                    #client.set(id, 1)
                 else:
                     print("invalid block", line)
             if line.startswith("good bot"):
