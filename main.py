@@ -22,7 +22,7 @@ def process_comment(comment, reddit):
     #     # we had replied to it so
     #     print("already replied to comment", id)
     #     return
-    if comment.submission.author.name == "USI-BOT" or True:
+    if comment.submission.author.name == "USI-BOT":
         # we will listen to it
         lines = body.lower().split("\n")
         for line in lines:
