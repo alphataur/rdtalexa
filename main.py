@@ -5,6 +5,13 @@ dotenv.load_dotenv()
 import os
 import requests
 import random
+import lyricsgenius as Lygen
+
+LygenAPI = Lygen.Genius(os.getenv("lygenKey"))
+
+def lyrics_to_query(lyrics):
+    temp = LygenAPI.search_song(lyrics)
+    return f"{temp.title} {temp.artist}"
 
 # client = redis.Redis()
 thanks = [
@@ -26,7 +33,25 @@ def process_comment(comment, reddit):
         # we will listen to it
         lines = body.lower().split("\n")
         for line in lines:
-            if line.startswith("alexa play"):
+            if line.startswith("alexa play this"):
+                popsie = comment.parent()
+                print("popsie search", popsie.body)
+                sterm = lyrics_to_query(popsie.body)
+                result = requests.get(
+                                        "https://youtuber.onrender.com/alexa", 
+                                        params={"sterm": sterm}
+                                      ).json()
+                if result:
+                    title = result["data"]["title"]
+                    url = result["data"]["url"]
+                    views = result["data"]["views"]
+                    imglink = result["data"]["snippet"]["thumbnails"]["url"]
+                    comment.upvote()
+                    comment.reply(f"##### NOW PLAYING: \n\n [{title}]({url})")
+                    #client.set(id, 1)
+                else:
+                    print("invalid block", line)
+            elif line.startswith("alexa play"):
                 sterm = line[10:]
                 print(sterm, "song requested {sterm}")
                 result = requests.get(
@@ -43,9 +68,19 @@ def process_comment(comment, reddit):
                     #client.set(id, 1)
                 else:
                     print("invalid block", line)
-            if line.startswith("good bot"):
+            elif line.startswith("good bot"):
                 comment.reply(random.choice(thanks))
                 comment.upvote()
+            elif line.startswith("delete"):
+                popsie = comment.parent()
+                grand_popsie = popsie.parent()
+                if comment.author.name == grand_popsie.author.name:
+                    popsie.delete()
+                else:
+                    comment.upvote()
+                    comment.reply("stop impersonating OP, identity theft is no joke!")
+            else:
+                pass
 
 
 
