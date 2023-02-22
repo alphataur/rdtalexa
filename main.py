@@ -70,7 +70,7 @@ def process_comment(comment, reddit):
                     print("invalid block", line)
             elif line.startswith("good bot"):
                 parent = comment.parent()
-                if parent.author.name == "USI-BOT":
+                if parent.author.name == "USI-BOT" and not (comment.parent_id == comment.link_id):
                     comment.reply(random.choice(thanks))
                     comment.upvote()
                 else:
