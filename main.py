@@ -69,8 +69,12 @@ def process_comment(comment, reddit):
                 else:
                     print("invalid block", line)
             elif line.startswith("good bot"):
-                comment.reply(random.choice(thanks))
-                comment.upvote()
+                parent = comment.parent()
+                if parent.author.name == "USI-BOT":
+                    comment.reply(random.choice(thanks))
+                    comment.upvote()
+                else:
+                    print("some new bot is in town; idont like him")
             elif line.startswith("delete"):
                 popsie = comment.parent()
                 grand_popsie = popsie.parent()
